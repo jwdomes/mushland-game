@@ -1,0 +1,425 @@
+@import url('https://fonts.googleapis.com/css2?family=Mystery+Quest&display=swap');
+
+.app {
+  color: #eee;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: 'Georgia', serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  /* page background image (placed in public/images/background.jpg) */
+  background-image: url('/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.app::before {
+  /* subtle dark overlay so text is readable on top of the image */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(rgba(8, 8, 8, 0.6), rgba(10, 10, 10, 0.55));
+}
+
+.resources {
+  margin-bottom: 12px;
+  padding: 16px 24px;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.85), rgba(30, 30, 30, 0.88));
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  border-radius: 0 0 16px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resources h1 {
+  margin: 0;
+  font-size: 3.0rem;
+  font-family: 'Mystery Quest', cursive;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(180deg, #fff8d6 0%, #ffd1a6 50%, #d9a57a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.6), 0 8px 26px rgba(0, 0, 0, 0.45);
+}
+
+.resources-right {
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.resources button {
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, #5a2f8f, #3d1f5c);
+  border: 1px solid rgba(200, 120, 255, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(90, 47, 143, 0.3);
+}
+
+.resources button:hover {
+  background: linear-gradient(135deg, #6d3fa8, #4a2a72);
+  box-shadow: 0 6px 16px rgba(90, 47, 143, 0.5);
+  transform: translateY(-2px);
+}
+
+.habitats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: nowrap;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  align-items: flex-start;
+  padding: 0 8px;
+}
+
+.habitat {
+  background: rgba(0, 0, 0, 0.4);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 12px;
+  border-radius: 12px;
+  flex: 1;
+  min-width: 0;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+}
+
+.habitat[data-habitat="forest"] {
+  background-image: url('/images/forestbackground.jpg');
+}
+
+.habitat[data-habitat="log"] {
+  background-image: url('/images/logbackground.jpg');
+}
+
+.habitat[data-habitat="soil"] {
+  background-image: url('/images/soilbackground.jpg');
+}
+
+.habitat h3 {
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+}
+
+.slots,
+.hand-row {
+  display: flex;
+  padding-left: 12px;
+  min-height: 160px;
+  align-items: flex-end;
+  position: relative;
+  z-index: 1
+}
+
+.slots {
+  gap: 8px;
+}
+
+/* Highlight habitat when dragging a matching card */
+.habitats[data-dragging="forest"] .habitat[data-habitat="forest"],
+.habitats[data-dragging="log"] .habitat[data-habitat="log"],
+.habitats[data-dragging="soil"] .habitat[data-habitat="soil"] {
+  filter: brightness(1.18);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 6px rgba(255, 255, 255, 0.02) inset;
+  transform: translateY(-2px);
+}
+
+.habitats[data-dragging] .habitat:not([data-habitat="forest"]):not([data-habitat="log"]):not([data-habitat="soil"]) {
+  opacity: 0.75;
+  filter: brightness(0.85);
+}
+
+.card {
+  width: 100px;
+  height: 140px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+  position: relative;
+  cursor: grab;
+  transition: transform 0.2s ease;
+  background: rgba(20, 20, 20, 0.9);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card .info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 6px 6px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 60%);
+  font-size: 0.75rem;
+  color: #fff;
+}
+
+.card[data-habitat="forest"] .info {
+  background: linear-gradient(135deg, rgba(45, 106, 79, 0.9), rgba(45, 106, 79, 0.95));
+}
+
+.card[data-habitat="log"] .info {
+  background: linear-gradient(135deg, rgba(139, 90, 43, 0.9), rgba(139, 90, 43, 0.95));
+}
+
+.card[data-habitat="soil"] .info {
+  background: linear-gradient(135deg, rgba(91, 70, 54, 0.9), rgba(91, 70, 54, 0.95));
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  z-index: 100 !important;
+}
+
+.played:hover {
+  transform: none !important;
+}
+
+.hand {
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.hand-row {
+  perspective: 1000px;
+  display: flex;
+  gap: 8px;
+  padding: 0;
+}
+
+.hand-row .card {
+  transform: rotate(calc(var(--i, 0) * 2deg - 5deg));
+  margin-left: 0 !important;
+}
+
+/* Hover-expanded preview for hand cards */
+.hand-card {
+  position: relative;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  overflow: visible;
+}
+
+.hand-card:hover {
+  transform: scale(1.4) translateY(-18px);
+  z-index: 999999 !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.card-expanded {
+  display: none;
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  max-width: 320px;
+  background: rgba(12, 12, 12, 0.95);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.7);
+  font-size: 0.9rem;
+  text-align: left;
+  z-index: 999999;
+}
+
+.card-expanded h4 {
+  margin: 0 0 6px 0;
+  font-size: 0.9rem;
+}
+
+.card-expanded p {
+  margin: 0 0 8px 0;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.hand-card:hover .card-expanded {
+  display: block;
+}
+
+/* Portal version of the expanded card shown on hover (fixed, not clipped) */
+.card-expanded-portal {
+  position: fixed;
+  transform: translateX(-50%);
+  width: 320px;
+  max-width: 88vw;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.99), rgba(15, 15, 15, 0.99));
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.75);
+  z-index: 200000;
+  font-family: 'Georgia', serif;
+  pointer-events: none;
+}
+
+/* Apply habitat color tint to portal */
+.card-expanded-portal[data-habitat="forest"] {
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(15, 15, 15, 0.95)), linear-gradient(135deg, rgba(45, 106, 79, 0.4), rgba(30, 70, 50, 0.4));
+  border-color: rgba(45, 106, 79, 0.6);
+  box-shadow: 0 18px 60px rgba(45, 106, 79, 0.35), inset 0 1px 0 rgba(45, 106, 79, 0.2);
+}
+
+.card-expanded-portal[data-habitat="log"] {
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(15, 15, 15, 0.95)), linear-gradient(135deg, rgba(139, 90, 43, 0.4), rgba(100, 60, 30, 0.4));
+  border-color: rgba(139, 90, 43, 0.6);
+  box-shadow: 0 18px 60px rgba(139, 90, 43, 0.35), inset 0 1px 0 rgba(139, 90, 43, 0.2);
+}
+
+.card-expanded-portal[data-habitat="soil"] {
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(15, 15, 15, 0.95)), linear-gradient(135deg, rgba(91, 70, 54, 0.4), rgba(60, 45, 35, 0.4));
+  border-color: rgba(91, 70, 54, 0.6);
+  box-shadow: 0 18px 60px rgba(91, 70, 54, 0.35), inset 0 1px 0 rgba(91, 70, 54, 0.2);
+}
+
+.card-expanded-portal h4 {
+  margin: 0 0 6px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffff99;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.card-expanded-portal p {
+  margin: 0 0 8px 0;
+  font-size: 0.85rem;
+  color: #ffffff;
+  line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.portal-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.portal-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.portal-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.portal-meta strong {
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.portal-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 0.8rem;
+  color: #ddd;
+}
+
+.drag-preview {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8) !important;
+  pointer-events: none;
+  z-index: 10000
+}
+
+.drag-preview img {
+  filter: brightness(1.1);
+}
+
+.slot-empty {
+  width: 100px;
+  height: 140px;
+  border-radius: 12px;
+  border: 2px dotted rgba(255, 255, 255, 0.22);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.06));
+  opacity: 1;
+  flex-shrink: 0;
+}
+
+/* Target slot styling when dragging a compatible card */
+.habitat[data-habitat="forest"] .slot-empty.slot-target {
+  border-color: rgba(45, 106, 79, 0.95);
+  box-shadow: 0 8px 20px rgba(45, 106, 79, 0.12);
+  transform: translateY(-6px);
+}
+
+.habitat[data-habitat="log"] .slot-empty.slot-target {
+  border-color: rgba(139, 90, 43, 0.95);
+  box-shadow: 0 8px 20px rgba(139, 90, 43, 0.12);
+  transform: translateY(-6px);
+}
+
+.habitat[data-habitat="soil"] .slot-empty.slot-target {
+  border-color: rgba(91, 70, 54, 0.95);
+  box-shadow: 0 8px 20px rgba(91, 70, 54, 0.12);
+  transform: translateY(-6px);
+}
+
+/* tiny worm icon used in the resources header */
+.icon-worm {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 3px;
+  border-radius: 1px;
+}
+
+.icon-spore {
+  width: 25px;
+  height: 25px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 3px;
+  margin-left: 3px;
+  border-radius: 1px;
+}
