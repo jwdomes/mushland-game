@@ -105,7 +105,7 @@ export default function App() {
   const [themePlaying, setThemePlaying] = useState(false)
   const toggleThemeMusic = () => {
     if (!themeMusicRef.current) {
-      const a = new Audio('/music/MushlandTheme.mp3')
+      const a = new Audio('music/MushlandTheme.mp3')
       a.loop = true
       a.volume = 0.25
       themeMusicRef.current = a
