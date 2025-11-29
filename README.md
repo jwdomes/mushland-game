@@ -1,73 +1,94 @@
-# React + TypeScript + Vite
+# Mushland Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A strategic card game where you cultivate mushrooms and manage resources in different habitats.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Mushland is an interactive deck-building card game built with React and TypeScript. Manage your resources (Worms and Spores), strategically place mushroom cards in different habitats (Forest, Log, Soil), and maximize your score.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Dynamic Card Game**: Draw, play, and manage cards with unique abilities
+- **Three Habitats**: Place cards strategically in Forest, Log, and Soil habitats
+- **Resource Management**: Earn and spend Worms (nutrients) and Spores
+- **Interactive UI**: Smooth drag-and-drop mechanics with visual feedback
+- **Card Preview**: Hover over cards in hand to see detailed descriptions and special abilities
+- **Background Music**: Immersive audio experience with background theme music
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 20+ and npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+This starts the development server with hot module reloading. Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Build
+
+```bash
+npm run build
+```
+
+Produces an optimized production build in the `dist/` directory.
+
+### Preview
+
+```bash
+npm preview
+```
+
+Preview the production build locally before deploying.
+
+## Deployment
+
+This project is configured to deploy automatically to GitHub Pages via GitHub Actions. Simply push to the `main` branch and the workflow will:
+
+1. Build the project
+2. Run tests and linting
+3. Deploy to GitHub Pages
+
+Your live site will be available at: `https://jwdomes.github.io/mushland-game/`
+
+## Tech Stack
+
+- **React 19** - UI framework
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool and dev server
+- **CSS3** - Styling with gradients and animations
+
+## Game Mechanics
+
+### Cards
+
+Each mushroom card has:
+- **Cost**: Worm cost to play
+- **Points**: Victory points when played
+- **Ability**: Special effect when played (draw card, gain resources, etc.)
+
+### Habitats
+
+Three distinct habitats with unique visual themes:
+- **Forest** - Green habitat
+- **Log** - Brown habitat  
+- **Soil** - Dark brown habitat
+
+### Resources
+
+- **Worms (🐛)**: Currency for playing cards
+- **Spores (✿)**: Secondary resource for card abilities
+
+## License
+
+MIT
