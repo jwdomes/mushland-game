@@ -18,12 +18,12 @@ interface Mushroom {
 
 let idCounter = 0
 const BASE_CARDS: Omit<Mushroom, 'id'>[] = [
-  { name: 'Fly Agaric', habitat: 'forest', cost: 2, points: 2, power: 'gainSpore', art: '/images/mushrooms/agaric.jpg' },
-  { name: 'Shiitake', habitat: 'log', cost: 1, points: 3, power: 'gainNutrient', art: '/images/mushrooms/shiitake.jpg' },
-  { name: "Lion's Mane", habitat: 'forest', cost: 2, points: 4, power: 'drawCard', art: '/images/mushrooms/lionsmane.jpg' },
-  { name: 'Morel', habitat: 'soil', cost: 3, points: 3, power: 'gainSpore', art: '/images/mushrooms/morel.jpg'},
-  { name: 'Oyster', habitat: 'log', cost: 1, points: 2, power: 'gainNutrient', art: '/images/mushrooms/oyster.jpg' },
-  { name: 'Reishi', habitat: 'forest', cost: 4, points: 5, power: 'gainNutrient', art: '/images/mushrooms/reishi.jpg' },
+  { name: 'Fly Agaric', habitat: 'forest', cost: 2, points: 2, power: 'gainSpore', art: 'images/mushrooms/agaric.jpg' },
+  { name: 'Shiitake', habitat: 'log', cost: 1, points: 3, power: 'gainNutrient', art: 'images/mushrooms/shiitake.jpg' },
+  { name: "Lion's Mane", habitat: 'forest', cost: 2, points: 4, power: 'drawCard', art: 'images/mushrooms/lionsmane.jpg' },
+  { name: 'Morel', habitat: 'soil', cost: 3, points: 3, power: 'gainSpore', art: 'images/mushrooms/morel.jpg'},
+  { name: 'Oyster', habitat: 'log', cost: 1, points: 2, power: 'gainNutrient', art: 'images/mushrooms/oyster.jpg' },
+  { name: 'Reishi', habitat: 'forest', cost: 4, points: 5, power: 'gainNutrient', art: 'images/mushrooms/reishi.jpg' },
 ]
 
 const createDeck = (): Mushroom[] => {
@@ -249,9 +249,9 @@ export default function App() {
           <button onClick={() => { dispatch({ type: 'DRAW' }); playSound('draw') }}>
             Draw ({state.deck.length})
           </button>
-          <img src="/images/icons/worm.png" alt="Worm" className="icon-worm" />
+          <img src="images/icons/worm.png" alt="Worm" className="icon-worm" />
           {state.nutrients} | 
-          <img src="/images/icons/spore.png" alt="Spore" className="icon-spore" />
+          <img src="images/icons/spore.png" alt="Spore" className="icon-spore" />
           {state.spores} |
           Score: {state.score + state.spores * 2 + state.nutrients}
 
